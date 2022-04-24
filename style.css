@@ -1,0 +1,385 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+a{
+    color: yellow;
+    background: black;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 14px;
+}
+
+
+body{
+    font-weight: 300;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    font-family: 'Poppins', sans-serif;
+}
+
+.foodies{
+    font-style: italic;
+}
+
+.btn{
+    font-family: inherit;
+    cursor: pointer;
+    outline: 0;
+    font-size: 1.05rem;
+}
+.text{
+    opacity: 0.8;
+}
+.title{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.container{
+    min-height: 100vh;
+}
+.meal-wrapper{
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: yellow;
+    text-align: center;
+}
+.meal-search{
+    margin: 2rem 0;
+}
+.meal-search cite{
+    font-size: 1rem;
+}
+.meal-search-box{
+    margin: 1.2rem 0;
+    display: flex;
+    align-items: stretch;
+}
+.search-control,
+.search-btn{
+    width: 100%;
+}
+.search-control{
+    padding: 0 1rem;
+    font-size: 1.1rem;
+    font-family: inherit;
+    outline: 0;
+    border: 1px solid red;
+    color: red;
+    border-top-left-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+}
+.search-control::placeholder{
+    color: red;
+}
+.search-btn{
+    width: 55px;
+    height: 55px;
+    font-size: 1.8rem;
+    background: red;
+    color: #fff;
+    border: none;
+    border-top-right-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    transition: all 0.4s linear;
+}
+.search-btn:hover{
+    background: darkred;
+}
+.meal-result{
+    margin-top: 4rem;
+}
+#meal{
+    margin: 2.4rem 0;
+}
+.meal-item{
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.79);
+    margin: 2rem 0;
+}
+.meal-item:hover{
+    background: yellowgreen;
+    transform: scale(1.1);
+}
+.meal-img img{
+    width: 100%;
+    display: block;
+}
+.meal-name{
+    padding: 1.5rem 0.5rem;
+}
+.meal-name h3{
+    font-size: 1.4rem;
+}
+.recipe-btn{
+    text-decoration: none;
+    color: #fff;
+    background: red;
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding: 0.75rem 0;
+    display: block;
+    width: 175px;
+    margin: 1rem auto;
+    border-radius: 2rem;
+    transition: all 0.4s linear;
+}
+.recipe-btn:hover{
+    background: darkred;
+}
+
+.meal-details{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    background: red;
+    border-radius: 1rem;
+    width: 90%;
+    height: 90%;
+    overflow-y: scroll;
+    display: none;
+    padding: 2rem 0;
+}
+.meal-details::-webkit-scrollbar{
+    width: 10px;
+}
+.meal-details::-webkit-scrollbar-thumb{
+    background: #f0f0f0;
+    border-radius: 2rem;
+}
+
+
+.showRecipe{
+    display: block;
+}
+
+.meal-details-content{
+    margin: 2rem;
+}
+.meal-details-content p:not(.recipe-category){
+    padding: 1rem 0;
+}
+.recipe-close-btn{
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+    font-size: 1.8rem;
+    background: yellow;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+}
+.recipe-title{
+    letter-spacing: 1px;
+    padding-bottom: 1rem;
+}
+.recipe-category{
+    background: rgb(175, 168, 168);
+    font-weight: 600;
+    color: red;
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.3rem;
+}
+.recipe-instruct{
+    padding: 1rem 0;
+}
+.recipe-meal-img img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto;
+    display: block;
+}
+.recipe-link{
+    margin: 1.4rem 0;
+}
+.recipe-link a{
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    transition: all 0.4s linear;
+}
+.recipe-link a:hover{
+    opacity: 0.8;
+}
+
+
+.notFound{
+    grid-template-columns: 1fr!important;
+    color: red;
+    font-size: 1.8rem;
+    font-weight: 600;
+    width: 100%;
+}
+
+
+
+@media screen and (min-width: 600px){
+    .meal-search-box{
+        width: 540px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media screen and (min-width: 768px){
+    #meal{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    .meal-item{
+        margin: 0;
+    }
+    .meal-details{
+        width: 700px;
+    }
+}
+
+@media screen and (min-width: 992px){
+    #meal{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+html{
+  scroll-behavior: smooth;
+}
+.arrow{
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 9;
+}
+.arrow a{
+  height: 39px;
+  width: 37px;
+  text-align: center;
+  background: #1b1b1b;
+  display: block;
+  border-radius: 3px;
+}
+.arrow a span{
+  color: #f2f2f2;
+  font-size: 25px;
+  line-height: 39px;
+  cursor: pointer;
+}
+
+.fa {
+  padding: 10px;
+  font-size: 20px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fa-facebook {
+    background: #3B5998;
+    color: white;
+  }
+
+.fa-youtube {
+  background: #bb0000;
+  color: white;
+}
+
+.fa-instagram {
+  background: #fd1d1d;
+  color: white;
+}
+
+.fa-linkedin {
+  background: #007bb5;
+  color: white;
+}
+
+
+button{
+    padding: 5px;
+    background: red;
+    border: none;
+    outline: none;
+    font-weight: bold;
+    color: #fafafa;
+    cursor: pointer;
+}
+section div span{
+    position: absolute;
+    top: 14px;
+    left: 13px;
+    background: pink;
+    width: 300px;
+    height: 186px;
+    display: none;
+}
+section div span img{
+    width: 100%;
+    height: 100%;
+}
+.select{
+    width: 60%;
+    height: 580px;
+    padding: 5%;
+    background: #222;
+    position: absolute;
+    top: -1000px;
+    left: 20%;
+    transition: 0.5s;
+    overflow-y: auto;
+    margin: auto;
+}
+.select.display{
+    top: 10px;
+}
+.select div{
+    width: 100%;
+    height: 200px;
+    display: flex;
+    padding: 5px;
+    border: 1px solid white;
+    position: relative;
+    margin: 5px auto;
+}
+.select div img{
+    width: 300px;
+    height: 100%;
+}
+.select div p{
+    padding: 34px;
+    
+}
+.select div p,.select div button{
+    position: absolute;
+    left: 45%;
+    top: 50%;
+    
+}
+.select div button{
+    left: 60%;
+    top: 55%;
+}
+.select div span{
+    display: none;
+}

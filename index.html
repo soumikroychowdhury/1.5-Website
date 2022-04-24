@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css">
+    <title>ABCD | Food Search</title>
+</head>
+<body background="food.jfif">
+
+
+    <div class="container">
+        <div class="meal-wrapper">
+            <a href="index.html">Home</a>
+            <a href="favouritefoods.html">Favourites</a>
+
+            <div class = "meal-search">
+                <img src="logo.png" alt="This is a logo" width="150rem">
+                <h2 class = "title">Delicious Meal(s)</h2>
+
+                <p class="foodies">Welcome Foodies!</p><br>
+                Enter the name of the food of which you want to see the recipe<br>
+        
+                <div class = "meal-search-box">
+                  <input type = "text" class = "search-control" placeholder="Enter the food name" id = "search-input">
+                  <button type = "submit" class = "search-btn btn" id = "search-btn">
+                    <i class = "fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class = "meal-result">
+                <h2 class = "title">These are the foods related to your search:</h2>
+
+                <section>
+                    <div id= "meal">
+                        
+                    </div>
+                </section>
+
+
+                <div class = "meal-details">
+                    <button type = "button" class = "btn recipe-close-btn" id = "recipe-close-btn">
+                      <i class = "fas fa-times"></i>
+                    </button>
+                    <div class = "meal-details-content">
+                      <h2 class = "recipe-title">Meals Name Here</h2>
+                      <p class = "recipe-category">Category Name</p>
+                      <div class = "recipe-instruct">
+                        <h3>Instructions:</h3>
+                        <p>Detailed Instructions</p>
+                      </div>
+                      <div class = "recipe-meal-img">
+                        <img src = "food.jfif" alt = "">
+                      </div>
+                      <div class = "recipe-link">
+                        <a href = "#" target = "_blank">Watch Video</a>
+                      </div>
+                    </div>
+                  </div>
+
+              </div>
+        </div>
+    </div>
+
+    
+    <div class="select">
+
+    </div>
+    <div class="arrow">
+      <a href="#" title="Back to Top"><span class="fas fa-angle-up"></span></a>
+   </div>
+</body>
+
+
+<script>
+    
+    const searchBtn = document.getElementById('search-btn');
+    const mealList = document.getElementById('meal');
+    const mealDetailsContent = document.querySelector('.meal-details-content');
+    const recipeCloseBtn = document.getElementById('recipe-close-btn');
+
+    searchBtn.addEventListener('click', getMealList);
+    mealList.addEventListener('click', getMealRecipe);
+    recipeCloseBtn.addEventListener('click', () => {
+        mealDetailsContent.parentElement.classList.remove('showRecipe');
+    });
+
+
+    function getMealList(){
+        let searchInputTxt = document.getElementById('search-input').value.trim();
+        fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchInputTxt}`)
+        .then(response => response.json())
+        .then(data => {
+            let html = "";
+            if(data.meals){
+              
+                
+                data.meals.forEach(meal => {
+
+                  
+                    
+                    html += `
+                        <div class = "meal-item" data-id = "${meal.idMeal}">
+                            <div class = "meal-img">
+                                <img src = "${meal.strMealThumb}" alt = "food" id="mealimage">
+                            </div>
+                            <div class = "meal-name">
+                                <h3  id="mealname">${meal.strMeal}</h3>
+                                <a href = "#" class = "recipe-btn">Get Recipe</a>
+                                <span></span>
+                                
+                                <button onclick="saveid(${meal.idMeal});" id="favouriteclicked">Add to Favourites</button>
+                                <!--
+                                <form action="demo3a.html">
+                                <input type="submit" value="Add to Favourites" onclick="fav();">
+                                </form>
+                                
+                                -->
+                            </div>
+                        </div>
+                        
+                    `;
+                    
+                });
+                mealList.classList.remove('notFound');
+            } else{
+                html = "There is no dish related related to your search in our database.";
+                mealList.classList.add('notFound');
+            }
+
+            mealList.innerHTML = html;
+        });
+    }
+    function saveid(x){
+            if(localStorage.getItem('saveid')== null){
+                localStorage.setItem('saveid','[]');
+            }
+            var old_data = JSON.parse(localStorage.getItem('saveid'));
+            old_data.push(x);
+            localStorage.setItem('saveid',JSON.stringify(old_data));
+    }
+
+
+    
+
+    function getMealRecipe(e){
+        e.preventDefault();
+        if(e.target.classList.contains('recipe-btn')){
+            let mealItem = e.target.parentElement.parentElement;
+            fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealItem.dataset.id}`)
+            .then(response => response.json())
+            .then(data => mealRecipeModal(data.meals));
+        }
+    }
+
+    function mealRecipeModal(meal){
+        console.log(meal);
+        meal = meal[0];
+        let html = `
+            <h2 class = "recipe-title">${meal.strMeal}</h2>
+            <p class = "recipe-category">${meal.strCategory}</p>
+            <div class = "recipe-instruct">
+                <h3>Instructions:</h3>
+                <p>${meal.strInstructions}</p>
+            </div>
+            <div class = "recipe-meal-img">
+                <img src = "${meal.strMealThumb}" alt = "">
+            </div>
+            <div class = "recipe-link">
+                <a href = "${meal.strYoutube}" target = "_blank">Watch Video</a>
+            </div>
+        `;
+        mealDetailsContent.innerHTML = html;
+        mealDetailsContent.parentElement.classList.add('showRecipe');
+    }
+
+    
+</script>
+<footer>
+    <p>
+      <a href="https://www.facebook.com/#" class="fa fa-facebook" target="_blank"></a>
+      <a href="https://www.youtube.com/#" class="fa fa-youtube" target="_blank"></a>
+      <a href="https://www.instagram.com/#" class="fa fa-instagram" target="_blank"></a>
+      <a href="https://in.linkedin.com/#" class="fa fa-linkedin" target="_blank"></a>
+    </p>
+    <p>
+      Copyright © 2022. All Rights Reserved.
+    </p>
+  </footer>
+</html>

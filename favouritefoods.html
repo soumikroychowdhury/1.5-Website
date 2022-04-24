@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css">
+    <title>ABCD | Favourite Foods</title>
+</head>
+<body background="food.jfif">
+
+    <div class = "container">
+        <div class = "meal-wrapper">
+    
+          <a href="index.html">Home</a>
+          <a href="favouritefoods.html">Favourites</a>
+    
+    
+          <div class = "meal-search">
+            <img src="logo.png" alt="This is a logo" width="150rem">
+            <h2 class = "title">Delicious Meal(s)</h2>
+            <p class="foodies">Welcome Foodies!</p><br>
+          </div>
+          
+    
+          
+    
+          <div class = "meal-result">
+            <h2 class = "title">These are your favourite foods:</h2>
+    <div id="meal">
+
+    </div>
+    
+    <script>
+        const mealList = document.getElementById('meal');
+        let html="";
+
+
+        var array = (JSON.parse(localStorage.getItem('saveid')));
+        array.forEach(element => {
+            console.log(element);
+            let theid = element.value;
+        
+
+
+        fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${element}`)
+        .then(response => response.json())
+        .then(data => {
+            
+        
+        html += `
+                        <div class = "meal-item" data-id = "${data.meals[0].idMeal}">
+                            <div class = "meal-img">
+                                <img src = "${data.meals[0].strMealThumb}" alt = "food" id="mealimage">
+                            </div>
+                            <div class = "meal-name">
+                                <h3  id="mealname">${data.meals[0].strMeal}</h3>
+                                <span></span>
+                                
+                                
+                            </div>
+                        </div>
+                        
+                    `;
+            
+        
+        
+        mealList.innerHTML = html;
+        });
+        });
+    </script>
+    <footer>
+        <p>
+          <a href="https://www.facebook.com/#" class="fa fa-facebook" target="_blank"></a>
+          <a href="https://www.youtube.com/#" class="fa fa-youtube" target="_blank"></a>
+          <a href="https://www.instagram.com/#" class="fa fa-instagram" target="_blank"></a>
+          <a href="https://in.linkedin.com/company/#" class="fa fa-linkedin" target="_blank"></a>
+        </p>
+        <p>
+          Copyright © 2022. All Rights Reserved.
+        </p>
+      </footer>
+</body>
+</html>
